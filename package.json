@@ -1,0 +1,43 @@
+{
+    "name": "@nascentdigital/scribe",
+    "version": "0.0.1",
+    "description": "A robust and extensible Javascript logging framework for the browser and node.",
+    "keywords": [
+        "logging",
+        "javascript",
+        "browser",
+        "node"
+    ],
+    "author": "Simeon de Dios <simeon@nascentdigital.com>",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nascentdigital/scribe.git"
+    },
+    "bugs": {
+        "url": "https://github.com/nascentdigital/scribe/issues"
+    },
+    "homepage": "https://github.com/nascentdigital/scribe#readme",
+    "files": [
+        "dist"
+    ],
+    "main": "dist/index.js",
+    "module": "dist/index.es.js",
+    "jsnext:main": "dist/index.es.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "prepare": "npm run build",
+        "build": "tsc",
+        "test": "jest"
+    },
+    "dependencies": {
+        "@nascentdigital/errors": "^1.0.0"
+    },
+    "devDependencies": {
+        "@jest/test-sequencer": "^26.0.1",
+        "@types/jest": "^25.2.3",
+        "jest": "^26.0.1",
+        "ts-jest": "^26.0.0",
+        "typescript": "^3.9.3"
+    }
+}
