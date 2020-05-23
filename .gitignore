@@ -1,18 +1,13 @@
+
 # dependencies
 node_modules
 
 # production
-/src
-/test
+dist
 
 # development
-.editorconfig
 .idea
 .vscode
-.travis.yml
-jest.config.js
-tsconfig.json
-tslint.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
