@@ -16,6 +16,9 @@ import {ScribeLog} from "./ScribeLog";
 // constants
 const ROOT_NAMESPACE = "";
 const ROOT_LOG_CONFIG: [LogNamespacePattern, LogLevel] = ["*", "error"];
+const NAMESPACE_MATCH = new RegExp(/^(\w+)((:\w+)(\/\w+)*)?$/);
+const NAMESPACE_PATTERN_MATCH = new RegExp(/^[\w\/:\*]+$/);
+
 
 // types
 export type LogNamespacePattern = string;
@@ -40,6 +43,13 @@ export class Scribe {
                 "A namespace must be provided when acquiring logs.");
         }
 
+        else if (!namespace.match(NAMESPACE_MATCH)) {
+
+            // TODO: update the error mesasge to point to the docs
+            throw new ArgumentError("namespacePattern",
+                "Invalid namespace (see ...).");
+        }
+
         // use cached log, or create one
         let log = this._logs.get(namespace)
         if (!log) {
@@ -56,6 +66,17 @@ export class Scribe {
     }
 
     public static setLogLevel(namespacePattern: LogNamespacePattern,  level: LogLevel) {
+
+        // throw if pattern is invalid
+        const matches = [...namespacePattern.matchAll(NAMESPACE_PATTERN_MATCH)];
+        if (!matches || matches.length === 0) {
+
+            //
+            throw new ArgumentError("namespacePattern",
+                "Invalid namespace pattern (see ...).");
+        }
+
+        // TODO: remove exact pattern match
 
         // TODO: update all the existing logs
         throw new NotImplementedError("");
