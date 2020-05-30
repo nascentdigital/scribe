@@ -2,6 +2,7 @@
 import "jest";
 import {ArgumentError} from "@nascentdigital/errors";
 import {
+    LogLevel,
     Scribe
 } from "../src";
 import {
@@ -12,6 +13,14 @@ import {
 // constants
 const LOG_NAMESPACE_A = "namespaceA";
 const LOG_NAMESPACE_B = "namespaceB";
+
+
+// lifecycle
+beforeEach(() => {
+
+    // reset framework before each test
+    Scribe.reset();
+});
 
 
 // test suite
@@ -54,7 +63,7 @@ describe("getLog()", () => {
         });
     });
 
-    describe("should work if namespace", () => {
+    describe("should succeed if namespace", () => {
 
         test("is just a module", () => {
             expect(Scribe.getLog("module")).toBeInstanceOf(ScribeLog);
@@ -77,7 +86,7 @@ describe("getLog()", () => {
         });
     });
 
-    test("should create log for a valid namespace", () => {
+    test("should create log with a matching namespace", () => {
 
         // get a log
         const logA = Scribe.getLog(LOG_NAMESPACE_A);
@@ -127,5 +136,35 @@ describe("getLog()", () => {
         expect(Scribe.getLog(LOG_NAMESPACE_A)).toBe(logA);
         expect(logA).toBeInstanceOf(ScribeLog);
         expect(logA.namespace).toEqual(LOG_NAMESPACE_A);
+    });
+
+    describe("should be initialized with log level that", () => {
+
+        test("matches default root level", () => {
+
+            // get log
+            const logA = Scribe.getLog(LOG_NAMESPACE_A);
+
+            // validate log level matches root
+            expect(logA.level).toEqual(Scribe.log.level);
+        });
+
+        test("matches updated root level", () => {
+
+            // test data
+            const updatedLevel: LogLevel = "debug";
+
+            // validate updated level isn't default (sanity test)
+            expect(Scribe.log.level).not.toEqual(updatedLevel);
+
+            // update root level
+            Scribe.setLogLevel("*", updatedLevel);
+
+            // get log
+            const logA = Scribe.getLog(LOG_NAMESPACE_A);
+
+            // validate log level matches root
+            expect(logA.level).toEqual(updatedLevel);
+        });
     });
 });
