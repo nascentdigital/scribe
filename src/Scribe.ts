@@ -36,10 +36,10 @@ type LogLevelConfig = {
 // class definition
 export class Scribe {
 
-    private static readonly _logs = new Map<LogNamespace, ScribeLog>();
+    private static _log: ScribeLog = Scribe.createRootLog();
+    private static readonly _logs = new Map<LogNamespace, ScribeLog>([[ROOT_NAMESPACE, Scribe._log]]);
     private static readonly _levelConfigs: Array<LogLevelConfig> = [ROOT_LOGLEVEL_CONFIG];
     private static _logFunction: LogFunction = ConsoleLogFunction;
-    private static _log: ScribeLog = Scribe.createRootLog();
 
 
     public static get log() { return this._log; }
@@ -48,12 +48,11 @@ export class Scribe {
     public static reset() {
 
         // reset internals
+        this._log = this.createRootLog();
         this._logs.clear();
+        this._logs.set(ROOT_NAMESPACE, this._log);
         this._levelConfigs.splice(0, this._levelConfigs.length, ROOT_LOGLEVEL_CONFIG);
         this._logFunction = ConsoleLogFunction;
-
-        // reset root log
-        this._log = this.createRootLog();
     }
 
     public static getLog(namespace: LogNamespace): Log {
@@ -104,8 +103,8 @@ export class Scribe {
 
         // create regexp for pattern
         const regexpPattern = namespacePattern
-            .replace("/", "\\/")
-            .replace("*", ".*");
+            .replace(/\//g, "\\/")
+            .replace(/\*/g, ".*");
         const matcher = new RegExp(`^${regexpPattern}$`);
 
         // add new config to start

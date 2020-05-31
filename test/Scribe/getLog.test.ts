@@ -4,10 +4,10 @@ import {ArgumentError} from "@nascentdigital/errors";
 import {
     LogLevel,
     Scribe
-} from "../src";
+} from "../../src";
 import {
     ScribeLog
-} from "../src/ScribeLog";
+} from "../../src/ScribeLog";
 
 
 // constants
