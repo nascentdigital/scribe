@@ -2,7 +2,7 @@
 import {Log, LogMethod, LogParameter} from "../Log";
 
 
-// log function
+// writer
 export function ConsoleWriter(log: Log, method: LogMethod, message: LogParameter,
                               ...args: ReadonlyArray<LogParameter>) {
     switch (method) {

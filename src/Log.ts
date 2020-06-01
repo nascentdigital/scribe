@@ -1,6 +1,6 @@
-
 // types
 export type LogNamespace = string | undefined;
+export type LogNamespacePattern = string;
 
 export type LogLevel = "silent" | "trace" | "debug" | "info" | "warn" | "error";
 export const LogLevels: ReadonlyArray<LogLevel> = [
@@ -34,4 +34,3 @@ export interface Log {
 
     error(message: LogParameter, ...args: LogParameter[]): void;
 }
-

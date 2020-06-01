@@ -7,6 +7,7 @@ import {
     LogLevels,
     LogMethod,
     LogNamespace,
+    LogNamespacePattern,
     LogParameter
 } from "./Log";
 import {ScribeLog} from "./ScribeLog";
@@ -25,7 +26,6 @@ const NAMESPACE_PATTERN_MATCH = new RegExp(/^[\w\/:*]+$/);
 
 
 // types
-export type LogNamespacePattern = string;
 type LogLevelConfig = {
     pattern: LogNamespacePattern;
     matcher: RegExp;
