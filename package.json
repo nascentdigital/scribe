@@ -1,6 +1,6 @@
 {
     "name": "@nascentdigital/scribe",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "description": "A robust and extensible Javascript logging framework for the browser and node.",
     "keywords": [
         "logging",
@@ -27,7 +27,7 @@
     "types": "dist/index.d.ts",
     "scripts": {
         "prepare": "npm run build",
-        "build": "tsc",
+        "build": "tsc -p ./tsconfig.npm.json",
         "test": "jest"
     },
     "dependencies": {

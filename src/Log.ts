@@ -1,20 +1,20 @@
 
 // types
-export type LogNamespace = string;
+export type LogNamespace = string | undefined;
 
 export type LogLevel = "silent" | "trace" | "debug" | "info" | "warn" | "error";
 export const LogLevels: ReadonlyArray<LogLevel> = [
-    "silent",
     "trace",
     "debug",
     "info",
     "warn",
-    "error"
+    "error",
+    "silent"
 ];
 export type LogMethod = Exclude<LogLevel, "silent">;
 
 export type LogParameter = string | number | boolean | ReadonlyArray<any> | Readonly<any> | undefined;
-export type LogFunction = (log: Log, method: LogMethod, message: LogParameter, ...args: ReadonlyArray<LogParameter>) => void;
+export type LogWriter = (log: Log, method: LogMethod, message: LogParameter, ...args: ReadonlyArray<LogParameter>) => void;
 
 
 // interface definition

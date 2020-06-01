@@ -1,5 +1,8 @@
 module.exports = {
     preset: "ts-jest",
     testEnvironment: "node",
-    // testSequencer: "./test/Sequencer.js"
+    collectCoverageFrom: [
+        "src/*.ts",
+        "src/writers/{!(ConsoleWriter),}.ts"
+    ]
 };

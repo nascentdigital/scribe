@@ -1,10 +1,10 @@
 // imports
-import {Log, LogMethod, LogParameter} from "./Log";
+import {Log, LogMethod, LogParameter} from "../Log";
 
 
 // log function
-export function ConsoleLogFunction(log: Log, method: LogMethod, message: LogParameter,
-                                   ...args: ReadonlyArray<LogParameter>) {
+export function ConsoleWriter(log: Log, method: LogMethod, message: LogParameter,
+                              ...args: ReadonlyArray<LogParameter>) {
     switch (method) {
         case "trace":
         case "debug":

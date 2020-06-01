@@ -1,9 +1,8 @@
 // imports
 import {ArgumentError, IllegalStateError} from "@nascentdigital/errors";
-import {ConsoleLogFunction} from "./ConsoleLogFunction";
 import {
     Log,
-    LogFunction,
+    LogWriter,
     LogLevel,
     LogLevels,
     LogMethod,
@@ -11,10 +10,11 @@ import {
     LogParameter
 } from "./Log";
 import {ScribeLog} from "./ScribeLog";
+import {ConsoleWriter} from "./writers";
 
 
 // constants
-const ROOT_NAMESPACE = "";
+const ROOT_NAMESPACE = undefined;
 const ROOT_LOGLEVEL_CONFIG: LogLevelConfig = {
     pattern: "*",
     matcher: /^.*$/,
@@ -36,23 +36,24 @@ type LogLevelConfig = {
 // class definition
 export class Scribe {
 
+    public static writer: LogWriter = ConsoleWriter;
+
     private static _log: ScribeLog = Scribe.createRootLog();
     private static readonly _logs = new Map<LogNamespace, ScribeLog>([[ROOT_NAMESPACE, Scribe._log]]);
     private static readonly _levelConfigs: Array<LogLevelConfig> = [ROOT_LOGLEVEL_CONFIG];
-    private static _logFunction: LogFunction = ConsoleLogFunction;
 
 
-    public static get log() { return this._log; }
+    public static get log() { return Scribe._log; }
 
 
     public static reset() {
 
         // reset internals
-        this._log = this.createRootLog();
-        this._logs.clear();
-        this._logs.set(ROOT_NAMESPACE, this._log);
-        this._levelConfigs.splice(0, this._levelConfigs.length, ROOT_LOGLEVEL_CONFIG);
-        this._logFunction = ConsoleLogFunction;
+        Scribe.writer = ConsoleWriter;
+        Scribe._log = Scribe.createRootLog();
+        Scribe._logs.clear();
+        Scribe._logs.set(ROOT_NAMESPACE, Scribe._log);
+        Scribe._levelConfigs.splice(0, Scribe._levelConfigs.length, ROOT_LOGLEVEL_CONFIG);
     }
 
     public static getLog(namespace: LogNamespace): Log {
@@ -70,14 +71,14 @@ export class Scribe {
         }
 
         // use cached log, or create one
-        let log = this._logs.get(namespace);
+        let log = Scribe._logs.get(namespace);
         if (!log) {
 
             // create new log with level set based on rules
-            log = new ScribeLog(namespace, this.getLogLevel(namespace), this.logProxy);
+            log = new ScribeLog(namespace, Scribe.getLogLevel(namespace), Scribe.logProxy);
 
             // map the log
-            this._logs.set(namespace, log);
+            Scribe._logs.set(namespace, log);
         }
 
         // return log
@@ -96,9 +97,9 @@ export class Scribe {
         }
 
         // remove exact pattern match
-        const prevConfigIndex = this._levelConfigs.findIndex(config => config.pattern === namespacePattern);
+        const prevConfigIndex = Scribe._levelConfigs.findIndex(config => config.pattern === namespacePattern);
         if (prevConfigIndex >= 0) {
-            this._levelConfigs.splice(prevConfigIndex, 1);
+            Scribe._levelConfigs.splice(prevConfigIndex, 1);
         }
 
         // create regexp for pattern
@@ -108,22 +109,22 @@ export class Scribe {
         const matcher = new RegExp(`^${regexpPattern}$`);
 
         // add new config to start
-        this._levelConfigs.splice(0, 0, {
+        Scribe._levelConfigs.splice(0, 0, {
             pattern: namespacePattern,
             matcher: matcher,
             level: level
         });
 
         // update all the existing log levels
-        for (const log of this._logs.values()) {
-            log.level = this.getLogLevel(log.namespace);
+        for (const log of Scribe._logs.values()) {
+            log.level = Scribe.getLogLevel(log.namespace);
         }
     }
 
     private static getLogLevel(namespace: LogNamespace): LogLevel {
 
         // scan loglevel configurations for first match
-        const config = this._levelConfigs.find(config => config.matcher.test(namespace));
+        const config = Scribe._levelConfigs.find(config => config.matcher.test(namespace || ""));
 
         // throw if there's no matching level (root should always be the fallback)
         if (!config) {
@@ -143,8 +144,8 @@ export class Scribe {
 
         // only log if level is high enough for method
         const level = log.level;
-        if (LogLevels.indexOf(level) >= LogLevels.indexOf(method)) {
-            Scribe._logFunction(log, method, message, ...args);
+        if (LogLevels.indexOf(level) <= LogLevels.indexOf(method)) {
+            Scribe.writer(log, method, message, ...args);
         }
     }
 }

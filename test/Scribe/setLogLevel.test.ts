@@ -2,18 +2,19 @@
 import "jest";
 import {ArgumentError} from "@nascentdigital/errors";
 import {
-    LogLevel, LogNamespace, LogNamespacePattern,
+    Log,
+    LogLevel,
+    LogLevels,
+    LogNamespace,
+    LogNamespacePattern,
     Scribe,
-    Log
+    NullWriter
 } from "../../src";
-import {
-    ScribeLog
-} from "../../src/ScribeLog";
+import {LogMethods} from "../util";
 
 
 // constants
-const LOG_NAMESPACE_A = "namespaceA";
-const LOG_NAMESPACE_B = "namespaceB";
+const mockLogWriter = jest.fn(NullWriter);
 
 
 // types
@@ -31,6 +32,9 @@ beforeEach(() => {
 
     // reset framework before each test
     Scribe.reset();
+
+    // bind mock log output
+    Scribe.writer = mockLogWriter;
 });
 
 
@@ -157,7 +161,7 @@ describe("setLogLevel()", () => {
         );
     });
 
-    describe("should target similar patterns based on", () => {
+    describe("should target best match based on", () => {
 
         test("specificity (infix)", () => testChange(
             {
@@ -331,7 +335,7 @@ function testChange(target: TestParameters, control: TestParameters, defaultName
     }
 
     // validate root is not affected
-    expect(Scribe.log.level).toEqual(defaultLevel);
+    testOutput(Scribe.log, defaultLevel)
 
     // create new logs
     let targetLogs: Log[];
@@ -354,9 +358,9 @@ function testChange(target: TestParameters, control: TestParameters, defaultName
     }
 
     // verify logs have correct levels
-    targetLogs.forEach(log => expect(log.level).toEqual(target.level));
-    controlLogs.forEach(log => expect(log.level).toEqual(control.level));
-    defaultLogs.forEach(log => expect(log.level).toEqual(defaultLevel));
+    targetLogs.forEach(log => testOutput(log, target.level));
+    controlLogs.forEach(log => testOutput(log, control.level));
+    defaultLogs.forEach(log => testOutput(log, defaultLevel));
 }
 
 function testRootChange({level, namespaces}: RootTestParameters) {
@@ -372,12 +376,33 @@ function testRootChange({level, namespaces}: RootTestParameters) {
     expect(() => Scribe.setLogLevel(rootPattern, level)).not.toThrow();
 
     // validate root is affected
-    expect(Scribe.log.level).toEqual(level);
+    testOutput(Scribe.log, level)
 
     // create new logs
     const logsA = namespaces.map(namespace => Scribe.getLog(namespace));
 
     // validate binding to new level
-    logsA.forEach(log => expect(log.level).toEqual(level));
+    logsA.forEach(log => testOutput(log, level));
 }
 
+function testOutput(log: Log, level: LogLevel) {
+
+    // verify level
+    expect(log.level).toEqual(level);
+
+    // log at all levels
+    LogMethods.forEach((method) => {
+
+        // reset mock
+        mockLogWriter.mockClear();
+        const mock = mockLogWriter.mock;
+        expect(mock.calls.length).toBe(0);
+
+        // log a message
+        log[method]("a message");
+
+        // determine expected call count
+        const expectedCalls = LogLevels.indexOf(method) >= LogLevels.indexOf(level) ? 1 : 0;
+        expect(mock.calls.length).toBe(expectedCalls);
+    });
+}

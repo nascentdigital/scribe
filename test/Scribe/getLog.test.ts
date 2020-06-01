@@ -11,8 +11,8 @@ import {
 
 
 // constants
-const LOG_NAMESPACE_A = "namespaceA";
-const LOG_NAMESPACE_B = "namespaceB";
+const LOG_NAMESPACE_A = "module:featureA";
+const LOG_NAMESPACE_B = "module:featureB";
 
 
 // lifecycle

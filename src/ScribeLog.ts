@@ -1,7 +1,7 @@
 // imports
 import {
     Log,
-    LogFunction,
+    LogWriter,
     LogLevel,
     LogNamespace,
     LogParameter
@@ -14,10 +14,10 @@ export class ScribeLog implements Log {
     public readonly namespace: LogNamespace;
 
     private _level: LogLevel;
-    private readonly _logFn: LogFunction;
+    private readonly _logFn: LogWriter;
 
 
-    public constructor(namespace: LogNamespace, level: LogLevel, logFn: LogFunction) {
+    public constructor(namespace: LogNamespace, level: LogLevel, logFn: LogWriter) {
         this.namespace = namespace;
         this._level = level;
         this._logFn = logFn;
