@@ -4,5 +4,10 @@ module.exports = {
     collectCoverageFrom: [
         "src/*.ts",
         "src/writers/{!(ConsoleWriter),}.ts"
-    ]
+    ],
+    globals: {
+        "ts-jest": {
+            tsConfig: "./tsconfig.test.json"
+        }
+    }
 };
