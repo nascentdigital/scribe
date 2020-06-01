@@ -7,8 +7,8 @@ import {
     Scribe,
     NullWriter
 } from "../../src";
-import {ScribeLog} from "../../src/ScribeLog";
 import {LogMethods} from "./constants";
+import {expectOutputToBeUnchanged} from "./expectOutputToBeUnchanged";
 
 
 // types
@@ -145,7 +145,7 @@ export class LogTester {
         test(name, () => {
 
             // extract params
-            const {logGetter, message, method, args = []} = params;
+            const {logGetter, method, message, args = []} = params;
             const log = logGetter();
 
             // ensure log is enabled for all levels
@@ -163,52 +163,8 @@ export class LogTester {
                 fail("Unexpected log state.");
             }
 
-            // sanity tests
-            const mock = this.mockLogWriter.mock;
-            expect(mock.calls.length).toBe(0);
-            expect(log.level).toBe(method);
-
-            // log message
-            const hasArgs = args.length > 0;
-            if (hasArgs) {
-                log[method](message, ...args);
-            }
-            else {
-                log[method](message);
-            }
-
-            // validate method was called only once
-            expect(mock.calls.length).toBe(1);
-
-            // validate invocation
-            const invocation = mock.calls[0];
-            expect(invocation).toHaveLength(3 + args.length);
-            expect(invocation[0]).toBeInstanceOf(ScribeLog);
-            expect(invocation[1]).toEqual(method);
-
-            // validate message
-            const messageParam = invocation[2];
-            expect(typeof messageParam).toBe(typeof message);
-            expect(messageParam).toEqual(message);
-
-            // validate arguments (if any)
-            if (hasArgs && args) {
-
-                // check args array
-                const argsParam = invocation.slice(3) as ReadonlyArray<LogParameter>;
-                expect(typeof argsParam).toBe(typeof argsParam);
-                expect(argsParam).toHaveLength(args.length);
-
-                // check individual parameters
-                args.forEach((arg, index) => {
-
-                    // verify types are same
-                    const param = argsParam[index];
-                    const paramType = typeof param;
-                    expect(paramType).toBe(typeof arg);
-                    expect(param).toBe(arg);
-                })
-            }
+            // expect logging to work
+            expectOutputToBeUnchanged(log, method, message, ...args);
         });
     }
 }

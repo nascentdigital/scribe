@@ -14,7 +14,16 @@ export const LogLevels: ReadonlyArray<LogLevel> = [
 export type LogMethod = Exclude<LogLevel, "silent">;
 
 export type LogParameter = string | number | boolean | ReadonlyArray<any> | Readonly<any> | undefined;
-export type LogWriter = (log: Log, method: LogMethod, message: LogParameter, ...args: ReadonlyArray<LogParameter>) => void;
+export type LogFunction = (log: Log, method: LogMethod, message: LogParameter, ...args: ReadonlyArray<LogParameter>) => void;
+export type LogContext = {
+    log: Log;
+    method: LogMethod;
+    message: LogParameter;
+    args: ReadonlyArray<LogParameter>;
+};
+
+export type LogTransform = (context: LogContext) => LogContext | Promise<LogContext>;
+export type LogWriter = (context: LogContext) => void;
 
 
 // interface definition

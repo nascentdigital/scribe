@@ -24,7 +24,7 @@ beforeEach(() => {
 
 
 // test suite
-describe("getLog()", () => {
+describe("Scribe.getLog()", () => {
 
     describe("should throw if namespace", () => {
 

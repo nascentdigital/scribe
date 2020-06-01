@@ -39,7 +39,7 @@ beforeEach(() => {
 
 
 // test suite
-describe("setLogLevel()", () => {
+describe("Scribe.setLogLevel()", () => {
 
     describe("should throw if namespace pattern", () => {
 

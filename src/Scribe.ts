@@ -8,7 +8,7 @@ import {
     LogMethod,
     LogNamespace,
     LogNamespacePattern,
-    LogParameter
+    LogParameter, LogContext, LogTransform
 } from "./Log";
 import {ScribeLog} from "./ScribeLog";
 import {ConsoleWriter} from "./writers";
@@ -36,6 +36,7 @@ type LogLevelConfig = {
 // class definition
 export class Scribe {
 
+    public static transform?: LogTransform;
     public static writer: LogWriter = ConsoleWriter;
 
     private static _log: ScribeLog = Scribe.createRootLog();
@@ -49,6 +50,7 @@ export class Scribe {
     public static reset() {
 
         // reset internals
+        Scribe.transform = undefined;
         Scribe.writer = ConsoleWriter;
         Scribe._log = Scribe.createRootLog();
         Scribe._logs.clear();
@@ -139,13 +141,34 @@ export class Scribe {
         return new ScribeLog(ROOT_NAMESPACE, ROOT_LOGLEVEL_CONFIG.level, Scribe.logProxy);
     }
 
-    private static logProxy(log: Log, method: LogMethod, message: LogParameter,
-                            ...args: ReadonlyArray<LogParameter>) {
+    private static async logProxy(log: Log, method: LogMethod, message: LogParameter,
+                                  ...args: ReadonlyArray<LogParameter>) {
 
         // only log if level is high enough for method
-        const level = log.level;
-        if (LogLevels.indexOf(level) <= LogLevels.indexOf(method)) {
-            Scribe.writer(log, method, message, ...args);
+        if (LogLevels.indexOf(log.level) <= LogLevels.indexOf(method)) {
+
+            // create context
+            let context: LogContext = {log, method, message, args};
+
+            // apply any transforms
+            if (Scribe.transform) {
+
+                // get result
+                const result = Scribe.transform(context);
+
+                // wait for result if it's a promise
+                if (result instanceof Promise) {
+                    context = await result;
+                }
+
+                // or assign immediately
+                else {
+                    context = result;
+                }
+            }
+
+            // apply writer
+            Scribe.writer(context);
         }
     }
 }

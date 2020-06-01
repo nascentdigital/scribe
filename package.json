@@ -36,7 +36,10 @@
     "devDependencies": {
         "@jest/test-sequencer": "^26.0.1",
         "@types/jest": "^25.2.3",
+        "@types/jest-matcher-utils": "^25.1.0",
+        "expect": "^26.0.1",
         "jest": "^26.0.1",
+        "jest-matcher-utils": "^26.0.1",
         "ts-jest": "^26.0.0",
         "typescript": "^3.9.3"
     },

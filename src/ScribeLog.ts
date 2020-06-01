@@ -1,7 +1,7 @@
 // imports
 import {
     Log,
-    LogWriter,
+    LogFunction,
     LogLevel,
     LogNamespace,
     LogParameter
@@ -14,13 +14,13 @@ export class ScribeLog implements Log {
     public readonly namespace: LogNamespace;
 
     private _level: LogLevel;
-    private readonly _logFn: LogWriter;
+    private readonly _logFunction: LogFunction;
 
 
-    public constructor(namespace: LogNamespace, level: LogLevel, logFn: LogWriter) {
+    public constructor(namespace: LogNamespace, level: LogLevel, logFunction: LogFunction) {
         this.namespace = namespace;
         this._level = level;
-        this._logFn = logFn;
+        this._logFunction = logFunction;
     }
 
     public get level() { return this._level; }
@@ -29,23 +29,23 @@ export class ScribeLog implements Log {
 
 
     public trace(message: LogParameter, ...args: LogParameter[]) {
-        this._logFn(this, "trace", message, ...args);
+        this._logFunction(this, "trace", message, ...args);
     }
 
     public debug(message: LogParameter, ...args: LogParameter[]) {
-        this._logFn(this, "debug", message, ...args);
+        this._logFunction(this, "debug", message, ...args);
     }
 
     public info(message: LogParameter, ...args: LogParameter[]) {
-        this._logFn(this, "info", message, ...args);
+        this._logFunction(this, "info", message, ...args);
     }
 
     public warn(message: LogParameter, ...args: LogParameter[]) {
-        this._logFn(this, "warn", message, ...args);
+        this._logFunction(this, "warn", message, ...args);
     }
 
     public error(message: LogParameter, ...args: LogParameter[]) {
-        this._logFn(this, "error", message, ...args);
+        this._logFunction(this, "error", message, ...args);
     }
 }
 

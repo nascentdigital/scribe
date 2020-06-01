@@ -1,10 +1,14 @@
 // imports
-import {Log, LogMethod, LogParameter} from "../Log";
+import {LogContext} from "../Log";
 
 
 // writer
-export function ConsoleWriter(log: Log, method: LogMethod, message: LogParameter,
-                              ...args: ReadonlyArray<LogParameter>) {
+export function ConsoleWriter(context: LogContext) {
+
+    // expand context
+    const {method, message, args} = context;
+
+    // process based on method
     switch (method) {
         case "trace":
         case "debug":
