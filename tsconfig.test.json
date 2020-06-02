@@ -24,8 +24,7 @@
     },
     "include": [
         "./src/**/*",
-        "./test/matchers/*",
-        "./test/util/*"
+        "./test/**/*"
     ],
     "exclude": [
         "node_modules",
