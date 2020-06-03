@@ -1,10 +1,9 @@
 // imports
 import "jest";
 import {
-    ConsoleWriter, LogContext, LogMethod, LogParameter,
+    ConsoleWriter, LogMethod, LogParameter,
     Scribe
 } from "../../src";
-import SpyInstance = jest.SpyInstance;
 
 
 // lifecycle
@@ -29,7 +28,7 @@ describe("ConsoleWriter", () => {
         () => testOutput("trace", "trace message", ["abc", 123]));
 
     test("should output to console.debug for debug messages",
-        () => testOutput("debug", "debug message", ["params"]));
+        () => testOutput("debug", "debug message"));
 
     test("should output to console.log for info messages",
         () => testOutput("info", "info message", [1, undefined]));
@@ -44,7 +43,7 @@ describe("ConsoleWriter", () => {
 
 // helpers
 function testOutput(method: LogMethod, message: LogParameter,
-                    args: ReadonlyArray<LogParameter>) {
+                    args: ReadonlyArray<LogParameter> = []) {
 
     // hijack console
     let consoleMock;
