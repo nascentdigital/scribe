@@ -96,7 +96,7 @@ export class Scribe {
 
             // TODO: update message to reference documenation link
             throw new ArgumentError("namespacePattern",
-                "Invalid namespace pattern (see ...).");
+                `Invalid namespace pattern "${namespacePattern}" (see https://github.com/nascentdigital/scribe#namespaces).`);
         }
 
         // remove exact pattern match
