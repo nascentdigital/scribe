@@ -6,6 +6,8 @@
 [![Node version](https://img.shields.io/node/v/@nascentdigital/scribe.svg)](http://nodejs.org/download/)
 [![Build Status](https://travis-ci.com/nascentdigital/scribe.svg?branch=master)](https://travis-ci.com/nascentdigital/scribe.svg?branch=master)
 [![Code Coverage](https://img.shields.io/codecov/c/github/nascentdigital/scribe.svg)](https://codecov.io/github/nascentdigital/scribe)
+[![Known Vulnerabilities](https://snyk.io/test/github/nascentdigital/scribe/badge.svg)](https://snyk.io/test/github/nascentdigital/scribe)
+
 
 
 
