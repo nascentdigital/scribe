@@ -26,6 +26,12 @@ const NAMESPACE_MATCH = new RegExp(/^([\w\-]+)((:[\w\-]+)(\/[\w\-]+)*)?$/);
 const NAMESPACE_PATTERN_MATCH = new RegExp(/^[\w\-\/:*]+$/g);
 
 
+// type extensions
+declare global {
+    interface Window { nascentdigital: any; }
+}
+
+
 // types
 type LogLevelConfig = {
     pattern: LogNamespacePattern;
@@ -172,4 +178,11 @@ export class Scribe {
             Scribe.writer(context);
         }
     }
+}
+
+
+// bind scribe to global window object in browser
+if (this.window) {
+    window.nascentdigital = window.nascentdigital || {};
+    window.nascentdigital.Scribe = Scribe;
 }
