@@ -183,6 +183,6 @@ export class Scribe {
 
 // bind scribe to global window object in browser
 if (this.window) {
-    window.nascentdigital = window.nascentdigital || {};
-    window.nascentdigital.Scribe = Scribe;
+    this.window.nascentdigital = this.window.nascentdigital || {};
+    this.window.nascentdigital.Scribe = Scribe;
 }
