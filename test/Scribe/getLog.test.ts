@@ -36,7 +36,7 @@ describe("Scribe.getLog()", () => {
         test("has invalid characters", () => {
             expect(() => Scribe.getLog("test$"))
                 .toThrow(ArgumentError);
-            expect(() => Scribe.getLog("test-name"))
+            expect(() => Scribe.getLog("test+name"))
                 .toThrow(ArgumentError);
             expect(() => Scribe.getLog("test.name"))
                 .toThrow(ArgumentError);
@@ -83,6 +83,7 @@ describe("Scribe.getLog()", () => {
 
         test("uses extended characters", () => {
             expect(Scribe.getLog("module_name:feature_name/method1")).toBeInstanceOf(ScribeLog);
+            expect(Scribe.getLog("module_name-1:feature_name-1/method_name-1")).toBeInstanceOf(ScribeLog);
         });
     });
 

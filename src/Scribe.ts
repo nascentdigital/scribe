@@ -22,8 +22,8 @@ const ROOT_LOGLEVEL_CONFIG: LogLevelConfig = {
     matcher: /^.*$/,
     level: "error"
 };
-const NAMESPACE_MATCH = new RegExp(/^(\w+)((:\w+)(\/\w+)*)?$/);
-const NAMESPACE_PATTERN_MATCH = new RegExp(/^[\w\/:*]+$/g);
+const NAMESPACE_MATCH = new RegExp(/^([\w\-]+)((:[\w\-]+)(\/[\w\-]+)*)?$/);
+const NAMESPACE_PATTERN_MATCH = new RegExp(/^[\w\-\/:*]+$/g);
 
 
 // types
