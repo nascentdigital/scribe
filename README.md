@@ -10,6 +10,7 @@
 
 
 ## Features
+- Works in the browser and Node.
 - Namespace support for fine-grained logging support at a module, feature, or method level.
 - Log level support to enable prioritized log output.
 - Dynamic configuration of log level mappings based on namespaces patterns.
