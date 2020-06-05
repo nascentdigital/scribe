@@ -66,17 +66,17 @@ a namespace is as follows:
 |               |                                                  |
 |---------------|--------------------------------------------------|
 |**namespace**  | `<identifier>`:`<identifier>`/`<identifier>`*    |
-|**identifier** | `[a-zA-Z0-9_]`                                   |
+|**identifier** | `[a-zA-Z0-9_\-]`                                   |
 |               |                                                  |
 
 
 Some examples of valid namespaces would be:
 
-- `"myapp"`
-- `"myapp:mymodule"`
-- `"myapp:mymodule/foo"`
-- `"myapp:mymodule/foo/bar"`
-- `"myapp:mymodule/foo/bar/variant"`
+- `"my-app"`
+- `"my-app:mymodule"`
+- `"my-app:mymodule/foo"`
+- `"my-app:mymodule/foo/bar"`
+- `"my-app:mymodule/foo/bar/variant_1"`
 
 ### Retrieving a Log
 
