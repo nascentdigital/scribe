@@ -1,9 +1,12 @@
 # dependencies
 node_modules
 
+# test
+/coverage
+/test
+
 # production
 /src
-/test
 
 # development
 .editorconfig
