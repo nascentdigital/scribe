@@ -94,7 +94,7 @@ export class Scribe {
         const matches = [...matchAll(namespacePattern, NAMESPACE_PATTERN_MATCH)];
         if (!matches || matches.length === 0) {
 
-            // TODO: update message to reference documenation link
+            // update message to reference documenation link
             throw new ArgumentError("namespacePattern",
                 `Invalid namespace pattern "${namespacePattern}" (see https://github.com/nascentdigital/scribe#namespaces).`);
         }
