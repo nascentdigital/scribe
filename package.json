@@ -1,6 +1,6 @@
 {
     "name": "@nascentdigital/scribe",
-    "version": "0.11.1",
+    "version": "0.11.2",
     "description": "A robust and extensible Javascript logging framework for the browser and node.",
     "keywords": [
         "logging",
