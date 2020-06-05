@@ -149,23 +149,24 @@ set filter that matches a namespace.  The default level for logs is `error` if t
 ```javascript
 
 // create a log early
-const log1 = Scribe.getLog("myapp:onboarding/login");
+const loginLog = Scribe.getLog("myapp:onboarding/login");
 
 // change default level to info, make onboarding debug
 Scribe.setLogLevel("*", "info");
 Scribe.setLogLevel("myapp:onboarding*", "debug");
 
 // show some logging
-log1.trace("this is not going to get output because trace level is disabled for this log.");
-log1.debug("this will be output to the debug console.")
-log1.error("errors will also get output");
+loginLog.trace("suppressed");
+loginLog.debug("OUTPUT")
+loginLog.error("OUTPUT");
 
 // late binding of another log
-const log2 = Scribe.getLog("myapp:home");
+const homeLog = Scribe.getLog("myapp:home");
 
 // use the new log
-log2.debug("this is not going to get output because this log is set to be 'info' (fallback).");
-log2.warn("this work because 'warn' is a higher precedence than 'info'");
+homeLog.debug("suppressed");
+homeLog.warn("OUTPUT");
+homeLog.error("OUTPUT");
 ```
 
 

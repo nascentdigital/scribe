@@ -16,6 +16,10 @@
         "outDir": "./dist/",
         "downlevelIteration": true,
         "strict": true,
+        "typeRoots": [
+            "node_modules/@types",
+            "src/@types"
+        ],
         "types": [
             "jest"
         ],

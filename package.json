@@ -31,7 +31,8 @@
         "test": "jest"
     },
     "dependencies": {
-        "@nascentdigital/errors": "^1.0.0"
+        "@nascentdigital/errors": "^1.0.0",
+        "string.prototype.matchall": "^4.0.2"
     },
     "devDependencies": {
         "@jest/test-sequencer": "^26.0.1",
@@ -44,6 +45,11 @@
         "typescript": "^3.9.3"
     },
     "engines": {
-        "node": ">=12.0.0"
-    }
+        "node": ">=8.0.0"
+    },
+    "browserslist": [
+        "> 1%",
+        "last 2 versions",
+        "not ie"
+    ]
 }

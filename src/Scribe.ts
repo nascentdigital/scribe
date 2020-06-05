@@ -1,4 +1,5 @@
 // imports
+import matchAll from "string.prototype.matchall";
 import {ArgumentError, IllegalStateError} from "@nascentdigital/errors";
 import {
     Log,
@@ -22,7 +23,7 @@ const ROOT_LOGLEVEL_CONFIG: LogLevelConfig = {
     level: "error"
 };
 const NAMESPACE_MATCH = new RegExp(/^(\w+)((:\w+)(\/\w+)*)?$/);
-const NAMESPACE_PATTERN_MATCH = new RegExp(/^[\w\/:*]+$/);
+const NAMESPACE_PATTERN_MATCH = new RegExp(/^[\w\/:*]+$/g);
 
 
 // types
@@ -90,7 +91,7 @@ export class Scribe {
     public static setLogLevel(namespacePattern: LogNamespacePattern,  level: LogLevel) {
 
         // throw if pattern is invalid
-        const matches = [...namespacePattern.matchAll(NAMESPACE_PATTERN_MATCH)];
+        const matches = [...matchAll(namespacePattern, NAMESPACE_PATTERN_MATCH)];
         if (!matches || matches.length === 0) {
 
             // TODO: update message to reference documenation link
