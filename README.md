@@ -1,11 +1,12 @@
 # Scribe
 > Finally, a full featured Javascript logging framework for the both browser and Node.
 
-[![NPM](https://img.shields.io/npm/v/react-lattice.svg)](https://www.npmjs.com/package/react-lattice)
+[![NPM version](https://img.shields.io/npm/v/@nascentdigital/scribe.svg)](https://www.npmjs.com/package/@nascentdigital/scribe)
+[![downloads](https://img.shields.io/npm/dm/@nascentdigital/scribe.svg)](http://npm-stat.com/charts.html?package=@nascentdigital/scribe&from=2020-06-05)
+[![Node version](https://img.shields.io/node/v/@nascentdigital/scribe.svg)](http://nodejs.org/download/)
 [![Build Status](https://travis-ci.com/nascentdigital/scribe.svg?branch=master)](https://travis-ci.com/nascentdigital/scribe.svg?branch=master)
-[![Code Coverage](https://img.shields.io/codecov/c/github/nascentdigital/scribe.svg?style=flat-square)](https://codecov.io/github/nascentdigital/scribe)
-[![version](https://img.shields.io/npm/v/@nascentdigital/scribe.svg?style=flat-square)](https://www.npmjs.com/package/@nascentdigital/scribe)
-[![downloads](https://img.shields.io/npm/dm/@nascentdigital/scribe.svg?style=flat-square)](http://npm-stat.com/charts.html?package=@nascentdigital/scribe&from=2020-06-01)
+[![Code Coverage](https://img.shields.io/codecov/c/github/nascentdigital/scribe.svg)](https://codecov.io/github/nascentdigital/scribe)
+
 
 
 ## Features
