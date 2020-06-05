@@ -10,6 +10,7 @@ import {
     Scribe,
     NullWriter
 } from "../../src";
+import {ScribeLog} from "../../src/ScribeLog";
 import {LogMethods} from "../util";
 
 
@@ -51,11 +52,18 @@ describe("Scribe.setLogLevel()", () => {
         test("has invalid characters", () => {
             expect(() => Scribe.setLogLevel("test$", "debug"))
                 .toThrow(ArgumentError);
-            expect(() => Scribe.setLogLevel("test-name", "debug"))
+            expect(() => Scribe.setLogLevel("test+name", "debug"))
                 .toThrow(ArgumentError);
             expect(() => Scribe.setLogLevel("test.name", "debug"))
                 .toThrow(ArgumentError);
         });
+    });
+
+    test("should accept valid namespace patterns", () => {
+        expect(() => Scribe.setLogLevel("my_module1", "debug"))
+            .not.toThrow();
+        expect(() => Scribe.setLogLevel("my-lib:my-module_name/my-method_name_01", "debug"))
+            .not.toThrow();
     });
 
     describe("should be able to target", () => {
