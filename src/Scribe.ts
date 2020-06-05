@@ -69,8 +69,8 @@ export class Scribe {
 
         // or throw if the format is incorect
         else if (!namespace.match(NAMESPACE_MATCH)) {
-            throw new ArgumentError("namespacePattern",
-                "Invalid namespace (see ...).");
+            throw new ArgumentError("namespace",
+                `Invalid namespace "${namespace}" (see .https://github.com/nascentdigital/scribe#namespaces).`);
         }
 
         // use cached log, or create one
@@ -96,7 +96,7 @@ export class Scribe {
 
             // update message to reference documenation link
             throw new ArgumentError("namespacePattern",
-                `Invalid namespace pattern "${namespacePattern}" (see https://github.com/nascentdigital/scribe#namespaces).`);
+                `Invalid namespace pattern "${namespacePattern}" (see https://github.com/nascentdigital/scribe#log-filters).`);
         }
 
         // remove exact pattern match
