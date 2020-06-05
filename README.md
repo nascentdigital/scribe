@@ -178,6 +178,16 @@ homeLog.warn("OUTPUT");
 homeLog.error("OUTPUT");
 ```
 
+#### Dynamically updating LogLevel
+
+While debugging in the browser you might want to dynamically set the `LogLevel` to see what's going on.  Scribe exposes
+itself through the globally in the browser through the `window.nascentdigital` namespace.  This allows updates at any
+time:
+
+```javascript
+> window.nascentdigital.Scribe.setLogLevel("*", "trace");
+```
+
 
 ### Advanced Configuration
 
