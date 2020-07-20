@@ -16,11 +16,12 @@ import {ConsoleWriter} from "./writers";
 
 
 // constants
+export const DEFAULT_ROOT_LEVEL: LogLevel = "error";
 const ROOT_NAMESPACE = undefined;
 const ROOT_LOGLEVEL_CONFIG: LogLevelConfig = {
     pattern: "*",
     matcher: /^.*$/,
-    level: "error"
+    level: DEFAULT_ROOT_LEVEL
 };
 const NAMESPACE_MATCH = new RegExp(/^([\w\-]+)((:[\w\-]+)(\/[\w\-]+)*)?$/);
 const NAMESPACE_PATTERN_MATCH = new RegExp(/^[\w\-\/:*]+$/g);
