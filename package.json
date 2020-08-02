@@ -32,6 +32,7 @@
     },
     "dependencies": {
         "@nascentdigital/errors": "^1.0.0",
+        "chalk": "^4.1.0",
         "string.prototype.matchall": "^4.0.2"
     },
     "devDependencies": {
