@@ -9,7 +9,8 @@ import {
     LogMethod,
     LogNamespace,
     LogNamespacePattern,
-    LogParameter, LogContext, LogTransform
+    LogParameter, LogContext, LogTransform,
+    LogColorRGB
 } from "./Log";
 import {ScribeLog} from "./ScribeLog";
 import {ConsoleWriter} from "./writers";
@@ -49,10 +50,11 @@ export class Scribe {
     private static _log: ScribeLog = Scribe.createRootLog();
     private static readonly _logs = new Map<LogNamespace, ScribeLog>([[ROOT_NAMESPACE, Scribe._log]]);
     private static readonly _levelConfigs: Array<LogLevelConfig> = [ROOT_LOGLEVEL_CONFIG];
-
+    private static readonly _logColors = new Map<LogNamespace, LogColorRGB>()
 
     public static get log() { return Scribe._log; }
 
+    public static get logColors() { return Scribe._logColors }
 
     public static reset() {
 
@@ -63,6 +65,7 @@ export class Scribe {
         Scribe._logs.clear();
         Scribe._logs.set(ROOT_NAMESPACE, Scribe._log);
         Scribe._levelConfigs.splice(0, Scribe._levelConfigs.length, ROOT_LOGLEVEL_CONFIG);
+        Scribe._logColors.clear()
     }
 
     public static getLog(namespace: LogNamespace): Log {

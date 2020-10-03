@@ -1,5 +1,6 @@
 import chalk from 'chalk'
-import { LogContext, LogMethod, LogParameter, LogColoringOption } from "../Log";
+import { LogContext, LogMethod, LogParameter, LogColoringOption, LogNamespace, LogColorRGB } from "../Log";
+import { Scribe } from '../Scribe';
 
 function applyColorBasedOnLogMethod(message: LogParameter, method: LogMethod): LogParameter {
 
@@ -23,12 +24,27 @@ function applyColorBasedOnLogMethod(message: LogParameter, method: LogMethod): L
     }
 }
 
+function applyColorBasedOnLogNamespace(message: LogParameter, namespace: LogNamespace): LogParameter {
+    let logColorRGB: LogColorRGB = [0, 0, 0]
+
+    if (Scribe.logColors.has(namespace)) {
+        logColorRGB = Scribe.logColors.get(namespace) as LogColorRGB
+    }
+
+    else {
+        logColorRGB = [255*Math.random(), 255*Math.random(), 255*Math.random()]
+        Scribe.logColors.set(namespace, logColorRGB)
+    }
+
+    return chalk.rgb(...logColorRGB)(message)
+}
+
 export function ColorTransform(logColoringOption: LogColoringOption) {
 
     // create transform
     return function (context: LogContext) {
 
-        const { message, method, ...contextData } = context;
+        const { message, method, log: { namespace } } = context;
 
         let coloredMessage = message
 
@@ -39,11 +55,12 @@ export function ColorTransform(logColoringOption: LogColoringOption) {
                 coloredMessage = applyColorBasedOnLogMethod(message, method);
                 break;
             case "namespace":
+                coloredMessage = applyColorBasedOnLogNamespace(message, namespace)
                 break;
             default:
                 break;
         }
     
-        return { ...contextData, message: coloredMessage, method }
+        return { ...context, message: coloredMessage, method }
     }
 }
