@@ -12,10 +12,6 @@ export const LogLevels: ReadonlyArray<LogLevel> = [
     "silent"
 ];
 export type LogMethod = Exclude<LogLevel, "silent">;
-
-export type LogColoringOption = "none" | "level" | "namespace"
-export type LogColorRGB = [number, number, number]
-
 export type LogParameter = string | number | boolean | ReadonlyArray<any> | Readonly<any> | undefined | null;
 export type LogFunction = (log: Log, method: LogMethod, message: LogParameter, ...args: ReadonlyArray<LogParameter>) => void;
 export type LogContext = {
