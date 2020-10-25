@@ -12,7 +12,6 @@ export const LogLevels: ReadonlyArray<LogLevel> = [
     "silent"
 ];
 export type LogMethod = Exclude<LogLevel, "silent">;
-
 export type LogParameter = string | number | boolean | ReadonlyArray<any> | Readonly<any> | undefined | null;
 export type LogFunction = (log: Log, method: LogMethod, message: LogParameter, ...args: ReadonlyArray<LogParameter>) => void;
 export type LogContext = {

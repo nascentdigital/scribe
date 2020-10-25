@@ -3,13 +3,15 @@ import matchAll from "string.prototype.matchall";
 import {ArgumentError, IllegalStateError} from "@nascentdigital/errors";
 import {
     Log,
-    LogWriter,
+    LogContext,
     LogLevel,
     LogLevels,
     LogMethod,
     LogNamespace,
     LogNamespacePattern,
-    LogParameter, LogContext, LogTransform
+    LogParameter,
+    LogTransform,
+    LogWriter,
 } from "./Log";
 import {ScribeLog} from "./ScribeLog";
 import {ConsoleWriter} from "./writers";
@@ -50,9 +52,7 @@ export class Scribe {
     private static readonly _logs = new Map<LogNamespace, ScribeLog>([[ROOT_NAMESPACE, Scribe._log]]);
     private static readonly _levelConfigs: Array<LogLevelConfig> = [ROOT_LOGLEVEL_CONFIG];
 
-
     public static get log() { return Scribe._log; }
-
 
     public static reset() {
 
