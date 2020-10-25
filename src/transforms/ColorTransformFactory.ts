@@ -97,7 +97,7 @@ class ColorValidator {
         if (rgb.red < 0 || rgb.red > 255) throw new ArgumentOutOfRangeError('value of red should be between 0 to 255')
         // green should be between 0 ~ 255
         if (rgb.green < 0 || rgb.green > 255) throw new ArgumentOutOfRangeError('value of green should be between 0 to 255')
-        // blue
+        // blue should be between 0 ~ 255
         if (rgb.blue < 0 || rgb.blue > 255) throw new ArgumentOutOfRangeError('value of blue should be between 0 to 255')
     }
 
@@ -106,7 +106,7 @@ class ColorValidator {
         if (hsl.hue < 0 || hsl.hue > 360) throw new ArgumentOutOfRangeError('value of hue should be between 0 to 360')
         // saturation should be between 0 ~ 1
         if (hsl.saturation < 0 || hsl.saturation > 1) throw new ArgumentOutOfRangeError('value of saturation should be between 0 to 1')
-        // lightness should be between 0 ~ 360
+        // lightness should be between 0 ~ 1
         if (hsl.lightness < 0 || hsl.lightness > 1) throw new ArgumentOutOfRangeError('value of lightness should be between 0 to 1')
     }
 
